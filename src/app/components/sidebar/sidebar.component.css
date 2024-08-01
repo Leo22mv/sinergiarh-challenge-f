@@ -1,0 +1,13 @@
+.nav {
+    position: fixed;
+    box-shadow: 1px 0 7px gray;
+    width: 86px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.btn {
+    margin-top: 15px;
+    width: 56px;
+    height: 46px;
+}
