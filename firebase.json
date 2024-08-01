@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/sinergia-challenge-f",
+    "public": "dist/sinergiarh-challenge-f",
     "ignore": [
       "firebase.json",
       "**/.*",
