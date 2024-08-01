@@ -62,6 +62,11 @@ export class DashboardComponent implements OnInit {
   handleEmployee(employee: any) {
     this.activeEmployee = employee;
     this.nameInputValue = employee.name;
+    this.surnameInputValue = employee.surname;
+    this.phoneInputValue = employee.phone;
+    this.genderInputValue = employee.gender.name;
+    this.tutorInputValue = employee.tutor.name;
+    
   }
 
   handleTask(id: number) {
