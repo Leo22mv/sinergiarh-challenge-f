@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   public employeeList: any = [];
 
-  public activeEmployee: number | null = null; 
+  public activeEmployee: any = null; 
 
   public creatingEmployee: boolean = false;
 
@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
       }
       this.employeeList = res;
       this.filteredEmployeeList = res
+      this.handleEmployee(this.employeeList[0])
     });
 
     this.taskService.findAllCategories().subscribe(res => {
@@ -58,8 +59,9 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  handleEmployee(id: number) {
-    this.activeEmployee = id;
+  handleEmployee(employee: any) {
+    this.activeEmployee = employee;
+    this.nameInputValue = employee.name;
   }
 
   handleTask(id: number) {

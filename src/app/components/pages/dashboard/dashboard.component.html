@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <ul *ngIf="!loadingFlag" class="list-group">
-                    <li class="list-group-item" *ngFor="let employee of filteredEmployeeList" [ngClass]="{'list-group-item-secondary': activeEmployee == employee.id}" (click)="handleEmployee(employee.id)">
+                    <li class="list-group-item" *ngFor="let employee of filteredEmployeeList" [ngClass]="{'list-group-item-secondary': activeEmployee.id == employee.id}" (click)="handleEmployee(employee)">
                         <h5>{{ employee.surname + ", " + employee.name }}</h5>
                     </li>
                 </ul>
