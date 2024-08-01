@@ -6,6 +6,5 @@
     height: 100%;
 }
 h1, h4 {
-    margin-top: 30px;
-    margin-left: 15px;
+    margin: 30px 15px 0 15px;
 }

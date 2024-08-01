@@ -43,6 +43,7 @@
 }
 .employees-list .spinner-border {
     margin: 0px auto;
+    margin-bottom: 15px;
 }
 
 .employee-form .spinner-border {
@@ -71,5 +72,10 @@
     }
     .task-list-section {
         width: 50%;
+    }
+}
+@media (max-width: 992px) {
+    .employee-form .card-header {
+        padding-left: 15px;
     }
 }
