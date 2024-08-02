@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class EmployeeService {
 
-  public uri: string = "http://localhost:8080/employee"
+  // public uri: string = "http://localhost:8080/employee";
+  public uri: string = "https://sinergiarh-challenge-b.onrender.com/employee";
 
   constructor(private http: HttpClient) { }
 

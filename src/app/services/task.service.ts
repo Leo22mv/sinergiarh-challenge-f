@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class TaskService {
 
-  private uri: string = "http://localhost:8080/task"
+  // private uri: string = "http://localhost:8080/task";
+  public uri: string = "https://sinergiarh-challenge-b.onrender.com/task";
 
   constructor(private http: HttpClient) { }
 
