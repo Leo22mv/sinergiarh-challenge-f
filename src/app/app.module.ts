@@ -8,13 +8,15 @@ import { DashboardComponent } from './components/pages/dashboard/dashboard.compo
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ExcludeEmployeePipe } from './pipes/exclude-employee.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     DashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+    ExcludeEmployeePipe
   ],
   imports: [
     BrowserModule,

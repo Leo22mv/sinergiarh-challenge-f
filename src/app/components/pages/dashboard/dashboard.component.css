@@ -61,6 +61,24 @@
 .form-check-input {
     border: 1px solid gray;
 }
+.task-list-section {
+    margin-top: 10px;
+}
+.alert {
+    margin: 10px;
+    padding: 10px;
+}
+.modal-dialog {
+    margin: 0px auto;
+}
+.modal-content {
+    padding: 15px;
+}
+.modal .btn {
+    width: max-content;
+    height: max-content;
+    padding: 15px;
+}
 
 @media (min-width: 992px) {
     .card {

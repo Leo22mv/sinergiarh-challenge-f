@@ -17,4 +17,20 @@ export class EmployeeService {
   create(employee: any) {
     return this.http.post(this.uri, employee);
   }
+
+  edit(employee: any) {
+    return this.http.put(this.uri + "/" + employee.id, employee);
+  }
+
+  delete(id: number) {
+    return this.http.delete(this.uri + "/" + id);
+  }
+
+  searchByName(query: string) {
+    return this.http.get(this.uri + "/search/name?name=" + query);
+  }
+
+  searchBySurname(query: string) {
+    return this.http.get(this.uri + "/search/surname?surname=" + query);
+  }
 }

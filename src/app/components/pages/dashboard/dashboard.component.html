@@ -3,29 +3,47 @@
     <!-- <div class="column col-3"> -->
         <div class="card employees-list">
             <div class="card-header">
-                <button class="btn btn-secondary">
+                <button [disabled]="loadingFlag||loadingFlag2||loadingForm" class="btn btn-secondary" (click)="handleCreateButton()">
                     <i class="fa-solid fa-user-plus fa-xl"></i>
                 </button>
-                <button class="btn btn-secondary">
+                <button [disabled]="loadingFlag||loadingFlag2||loadingForm||!activeEmployee" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i class="fa-solid fa-trash fa-xl"></i>
                 </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Seguro que desea eliminar al usuario <b>{{ activeEmployee?.name + " " + activeEmployee?.surname }}</b>? Esta acción no es reversible.</h1>
+                        </div>
+                        <div class="modal-body">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button (click)="handleDeleteButton()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
+                    <input [(ngModel)]="searchByNameInputValue" (input)="onNameSearchInputChange()" [disabled]="loadingFlag||loadingFlag2||loadingForm" type="text" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
                     <label for="floatingInput">Buscar por nombre</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
+                    <input [(ngModel)]="searchBySurnameInputValue" (input)="onSurnameSearchInputChange()" [disabled]="loadingFlag||loadingFlag2||loadingForm" type="text" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
                     <label for="floatingInput">Buscar por apellido</label>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div *ngIf="loadingFlag" class="spinner-border" role="status">
+                    <div *ngIf="loadingFlag||loadingFlag2||loadingSearch" class="spinner-border" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-                <ul *ngIf="!loadingFlag" class="list-group">
-                    <li class="list-group-item" *ngFor="let employee of filteredEmployeeList" [ngClass]="{'list-group-item-secondary': activeEmployee.id == employee.id}" (click)="handleEmployee(employee)">
+                <div class="d-flex justify-content-center" *ngIf="searchError">
+                    <div class="alert alert-danger">
+                        {{ searchErrorMessage }}
+                    </div>
+                </div>
+                <ul *ngIf="!loadingFlag&&!loadingFlag2" class="list-group">
+                    <li class="list-group-item" *ngFor="let employee of filteredEmployeeList" [ngClass]="{'list-group-item-secondary': activeEmployee?.id == employee.id}" (click)="handleEmployee(employee)">
                         <h5>{{ employee.surname + ", " + employee.name }}</h5>
                     </li>
                 </ul>
@@ -40,65 +58,80 @@
                 <h1 class="card-title">Datos personales</h1>
             </div>
             <div class="card-body">
-            <div class="d-flex justify-content-center">
-                <div *ngIf="loadingFlag" class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                <div class="d-flex justify-content-center">
+                    <div *ngIf="loadingFlag||loadingFlag2" class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
-            </div>
-            <div *ngIf="!loadingFlag">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-floating mb-3">
-                            <input [(ngModel)]="nameInputValue" type="text" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
-                            <label for="floatingInput">Nombre</label>
+                <div *ngIf="!loadingFlag&&!loadingFlag2">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input [disabled]="!creatingEmployee&&!editingEmployee||loadingForm" [(ngModel)]="nameInputValue" type="text" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
+                                <label for="floatingInput">* Nombre</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input [disabled]="!creatingEmployee&&!editingEmployee||loadingForm" [(ngModel)]="surnameInputValue" type="text" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
+                                <label for="floatingInput">* Apellido</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input [disabled]="!creatingEmployee&&!editingEmployee||loadingForm" [(ngModel)]="phoneInputValue" type="number" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
+                                <label for="floatingInput">Teléfono</label>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input [(ngModel)]="surnameInputValue" type="text" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
-                            <label for="floatingInput">Apellido</label>
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <select [disabled]="!creatingEmployee&&!editingEmployee||loadingForm" [(ngModel)]="genderInputValue" class="form-control" id="floatingInput">
+                                    <option value="" disabled selected>Seleccionar</option>
+                                    <option>Masculino</option>
+                                    <option>Femenino</option>
+                                </select>
+                                <label for="floatingInput">* Género</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select [disabled]="!creatingEmployee&&!editingEmployee||loadingForm" [(ngModel)]="tutorInputValue" class="form-control" id="floatingInput">
+                                    <option value="" disabled selected>Seleccionar</option>
+                                    <option value="0">Sin tutor</option>
+                                    <option value="{{ employee.id }}" *ngFor="let employee of employeeList | excludeEmployee:activeEmployee?.id">{{ employee.surname + ", " + employee.name }}</option>
+                                </select>
+                                <label for="floatingInput">* Tutor</label>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input [(ngModel)]="phoneInputValue" type="number" class="form-control" id="floatingInput" placeholder="nombre@ejemplo.com">
-                            <label for="floatingInput">Teléfono</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-floating mb-3">
-                            <select [(ngModel)]="genderInputValue" class="form-control" id="floatingInput">
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option>Masculino</option>
-                                <option>Femenino</option>
-                            </select>
-                            <label for="floatingInput">Género</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <select [(ngModel)]="tutorInputValue" class="form-control" id="floatingInput">
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option>Sin tutor</option>
-                                <option value="{{ employee.id }}" *ngFor="let employee of employeeList">{{ employee.surname + ", " + employee.name }}</option>
-                            </select>
-                            <label for="floatingInput">Tutor</label>
-                        </div>
-                    </div>
-                    <div class="task-list">
-                        <div class="task-list-section" *ngFor="let taskCategory of taskCategories">
-                            <h4>{{ taskCategory.name }}</h4>
-                            <div class="form-check" *ngFor="let task of taskCategory.tasks">
-                                <input (change)="handleTask(task.id)" class="form-check-input" type="checkbox" value="{{ task.id }}" id="{{ 'flexCheckDefault' + task.id }}">
-                                <label class="form-check-label" for="{{ 'flexCheckDefault' + task.id }}">
-                                    {{ task.name }}
-                                </label>
+                        <div class="task-list">
+                            <div class="task-list-section" *ngFor="let taskCategory of taskCategories">
+                                <h4>{{ taskCategory.name }}</h4>
+                                <div class="form-check" *ngFor="let task of taskCategory.tasks">
+                                    <input [disabled]="!creatingEmployee&&!editingEmployee||loadingForm" [(ngModel)]="task.checked" (change)="handleTask(task.id)" class="form-check-input" type="checkbox" value="{{ task.id }}" id="{{ 'flexCheckDefault' + task.id }}">
+                                    <label class="form-check-label" for="{{ 'flexCheckDefault' + task.id }}">
+                                        {{ task.name }}
+                                    </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button (click)="handleCreateEmployeeButton()" class="btn btn-secondary">Guardar</button>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button class="btn btn-secondary">Editar</button>
+                        <div class="d-flex justify-content-center">
+                            <div *ngIf="loadingForm" class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center" *ngIf="formError">
+                            <div class="alert alert-danger">
+                                {{ errorMessage }}
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center" *ngIf="editedEmployee">
+                            <div class="alert alert-success">
+                                Empleado modificado correctamente.
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center" *ngIf="creatingEmployee||editingEmployee">
+                            <button [disabled]="loadingForm" (click)="handleSaveEmployeeButton()" class="btn btn-secondary">Guardar</button>
+                        </div>
+                        <div class="d-flex justify-content-center" *ngIf="!editingEmployee&&!creatingEmployee">
+                            <button (click)="handleEditButton()" class="btn btn-secondary">Editar</button>
+                        </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
