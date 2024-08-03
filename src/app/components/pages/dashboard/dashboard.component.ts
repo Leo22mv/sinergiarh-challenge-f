@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { TaskService } from 'src/app/services/task.service';
 
+// Página del dashboard, contiene todas las utilidades de la aplicación
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

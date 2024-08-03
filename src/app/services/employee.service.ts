@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+// Servicio encargado de realizar peticiones sobre empleados
+
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  // public uri: string = "http://localhost:8080/employee";
-  public uri: string = "https://sinergiarh-challenge-b.onrender.com/employee";
+  public uri: string = "http://localhost:8080/employee";
+  // public uri: string = "https://sinergiarh-challenge-b.onrender.com/employee";
 
   constructor(private http: HttpClient) { }
 

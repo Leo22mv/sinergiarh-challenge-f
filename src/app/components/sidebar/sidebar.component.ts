@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+// Componente que permite navegar entre las rutas disponibles
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',

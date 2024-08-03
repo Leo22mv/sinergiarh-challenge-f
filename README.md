@@ -1,27 +1,15 @@
-# SinergiarhChallengeF
+# Challenge - SinergiaRH
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+Front-end del challenge para SinergiaRH. Desarrollado con Angular, por Leo Martinez.
 
-## Development server
+## Ejecutar proyecto
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Para ejecutar el proyecto, es necesario usar los comandos `npm install` para instalar las dependencias necesarias y `npm run start` para desplegar la aplicación en el puerto 4200.
 
-## Code scaffolding
+## Componentes
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Dentro de la carpeta `src/app/components` se encuentran los componentes. La aplicación consta de 3 componentes principales: el sidenav y las páginas de inicio y dashboard.
 
-## Build
+## Servicios
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Los servicios encargados de realizar las peticiones al back-end se encuentran en la carpeta `src/app/services` y son 2: el servicio de empleados, y el servicio de tareas.

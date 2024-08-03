@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+// Pipe utilizado para excluir de la lista de selección de tutores al empleado que se está editando
+
 @Pipe({
   name: 'excludeEmployee'
 })
